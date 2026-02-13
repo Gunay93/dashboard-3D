@@ -5,7 +5,7 @@ import { useState } from "react";
 import { addObject, updateObject } from "../redux/object/objectsSlice";
 import Object3D from "../components/Object3D";
 
-export default function EditorPage() {
+export default function Editor() {
   const objects = useSelector((state) => state.objects.items);
   const designers = useSelector((state) => state.designers.list);
   const dispatch = useDispatch();
@@ -47,7 +47,7 @@ export default function EditorPage() {
         <Canvas
 
           shadows
-          camera={{ position: [0, 10, 10], fov: 45 }}
+          camera={{ position: [0, 0, 16], fov: 40 }}
         >
           <color attach="background" args={["#ffffff"]} />
 
@@ -76,6 +76,9 @@ export default function EditorPage() {
               object={obj}
               selected={obj.id === selectedObjectId}
               onSelect={() => setSelectedObjectId(obj.id)}
+              onMove={(newPos) =>
+                handleUpdateObject(obj.id, { position: newPos })
+              }
             />
           ))}
         </Canvas>

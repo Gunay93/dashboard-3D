@@ -1,11 +1,11 @@
 import { useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
+import Designer from "../components/Designer"
 import { addDesigner, selectDesigner } from "../redux/designer/designersSlice"
 
 export default function Designers() {
     const dispatch = useDispatch()
     const designers = useSelector((state) => state.designers.list)
-    const objects = useSelector((state) => state.objects.items)
     const [fullName, setFullName] = useState("")
     const [workingHours, setWorkingHours] = useState("")
     const [error, setError] = useState({ fullName: "", workingHours: "" })
@@ -42,9 +42,6 @@ export default function Designers() {
         dispatch(selectDesigner(id))
     }
 
-    const countObjects = (designerId) =>
-        objects.filter((obj) => obj.attachedDesigner === designerId).length
-
     return (
         <div className="designers-page">
             <h1>Designers</h1>
@@ -80,20 +77,7 @@ export default function Designers() {
 
             <div className="designer-cards">
                 {designers.map((d) => (
-                    <div
-                        key={d.id}
-                        className='designer-card'
-                        onClick={() => handleSelect(d.id)}
-                    >
-                        <div className="designer-avatar">
-                            <img src={d.avatar} alt={d.fullName} />
-                        </div>
-                        <div className="designer-info">
-                            <h3>{d.fullName}</h3>
-                            <p>Working hours: {d.workingHours}</p>
-                            <p>Attached objects: {countObjects(d.id)}</p>
-                        </div>
-                    </div>
+                    <Designer d={d}/>
                 ))}
             </div>
         </div>
