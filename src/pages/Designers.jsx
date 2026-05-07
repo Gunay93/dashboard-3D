@@ -12,19 +12,19 @@ export default function Designers() {
     const handleAddDesigner = () => {
         let hasError = false
         const newError = { fullName: "", workingHours: "" }
-      
+
         if (!fullName.trim()) {
-          newError.fullName = "Full name is required"
-          hasError = true
+            newError.fullName = "Full name is required"
+            hasError = true
         }
-      
+
         if (!workingHours.trim()) {
-          newError.workingHours = "Working Hours is required"
-          hasError = true
+            newError.workingHours = "Working Hours is required"
+            hasError = true
         }
-      
+
         setError(newError)
-      
+
         if (hasError) return
         const lastId = designers.length > 0 ? designers[designers.length - 1].id : 100
         const newDesigner = {
@@ -75,10 +75,20 @@ export default function Designers() {
                 <button onClick={handleAddDesigner}>Add Designer</button>
             </div>
 
-            <div className="designer-cards">
+            <div className="designers-table">
+
+                <div className="table-head">
+                    <span>Designer</span>
+                    <span>Hours</span>
+                    <span>Objects</span>
+                    <span>Status</span>
+                    <span>Actions</span>
+                </div>
+
                 {designers.map((d) => (
-                    <Designer d={d}/>
+                    <Designer key={d.id} d={d} />
                 ))}
+
             </div>
         </div>
     )
