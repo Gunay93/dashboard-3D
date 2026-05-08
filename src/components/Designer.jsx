@@ -1,13 +1,18 @@
-import { useSelector } from "react-redux";
-import { FiMoreVertical } from "react-icons/fi";
+import { useDispatch, useSelector } from "react-redux";
+import { FiTrash2 } from "react-icons/fi";
+import { removeDesigner } from "../redux/designer/designersSlice";
+import { unassignDesignerObjects } from "../redux/object/objectsSlice";
 
 export default function Designer({ d }) {
+    const dispatch = useDispatch()
     const objects = useSelector((state) => state.objects.items);
-    console.log(d);
     const countObjects = objects.filter(
         (obj) => obj.attachedDesigner == d.id
     ).length;
-
+    const handleDelete = () => {
+        dispatch(unassignDesignerObjects(d.id));
+        dispatch(removeDesigner(d.id));
+    };
     return (
         <div className="table-row">
 
@@ -23,9 +28,11 @@ export default function Designer({ d }) {
             <span className={`badge ${d.status === "active" ? "active" : "deactive"}`}>
                 {d.status}
             </span>
-
-            <button className="action-btn">
-                <FiMoreVertical />
+            <button
+                className="delete-btn"
+                onClick={handleDelete}
+            >
+                <FiTrash2 />
             </button>
 
         </div>

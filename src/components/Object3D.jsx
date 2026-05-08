@@ -22,8 +22,8 @@ export default function Object3D({ object, onSelect, selected, onMove }) {
 
   const meshRef = useRef();
   const [dragging, setDragging] = useState(false);
-  const designer = designers.find(d => d.id.toString() === object.attachedDesigner.toString());
-  const designerName = designer ? designer.fullName : "Unknown";
+  const designer = designers.find(d => d.id.toString() === object.attachedDesigner?.toString());
+  const designerName = designer ? designer.fullName : "Unassigned";
   return (
     <mesh
       ref={meshRef}
@@ -42,7 +42,7 @@ export default function Object3D({ object, onSelect, selected, onMove }) {
       onPointerUp={(e) => {
         setDragging(false);
         e.target.releasePointerCapture(e.pointerId);
-      }}      
+      }}
       onPointerMove={(e) => {
         if (!dragging) return;
         e.stopPropagation();
@@ -68,7 +68,7 @@ export default function Object3D({ object, onSelect, selected, onMove }) {
         position={[0.1, 1.5, 0]}
         distanceFactor={4}
       >
-        <div className="object-info">
+        <div className={`object-info ${!designer ? "unassigned" : ""}`}>
           <strong>{object.name}</strong>
           <div>Designer: {designerName}</div>
         </div>

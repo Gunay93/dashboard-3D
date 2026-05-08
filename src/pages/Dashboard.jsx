@@ -19,6 +19,17 @@ export default function Dashboard() {
     (d) => d.status === "active"
   ).length;
 
+  const performance =
+    designers.length > 0
+      ? Math.round(
+        (activeDesigners / designers.length) * 100
+      )
+      : 0;
+  const latestDesigner =
+    designers[designers.length - 1];
+
+  const latestObject =
+    objects[objects.length - 1];
   return (
     <div className="dashboard-page">
 
@@ -73,7 +84,7 @@ export default function Dashboard() {
 
           <div>
             <h3>Performance</h3>
-            <p>98%</p>
+            <p>{performance}%</p>
           </div>
         </div>
 
@@ -84,28 +95,39 @@ export default function Dashboard() {
         <div className="recent-activity">
           <h2>Recent Activity</h2>
 
-          <div className="activity-item">
-            <span className="dot"></span>
-            <p>New object added to the scene</p>
-          </div>
+          {latestDesigner && (
+            <div className="activity-item">
+              <span className="dot"></span>
+
+              <p>
+                {latestDesigner.fullName} joined the team
+              </p>
+            </div>
+          )}
+
+          {latestObject && (
+            <div className="activity-item">
+              <span className="dot"></span>
+
+              <p>
+                New object created in editor
+              </p>
+            </div>
+          )}
 
           <div className="activity-item">
             <span className="dot"></span>
-            <p>Designer updated profile</p>
-          </div>
 
-          <div className="activity-item">
-            <span className="dot"></span>
-            <p>Scene modified in editor</p>
+            <p>
+              {objects.length} total objects in scene
+            </p>
           </div>
         </div>
 
         <div className="quick-actions">
           <h2>Quick Actions</h2>
-
-          <button>Add Designer</button>
-          <button>Create Object</button>
-          <button>Open Editor</button>
+          <a href="#/editor">Open Editor</a>
+          <a href="#/designers">View Designers</a>
         </div>
 
       </div>

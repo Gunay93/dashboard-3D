@@ -31,15 +31,12 @@ export default function Designers() {
             id: lastId + 1,
             fullName,
             workingHours,
+            status:'deactive',
             avatar: `https://i.pravatar.cc/350?img=${Math.floor(Math.random() * 70)}`
         }
         dispatch(addDesigner(newDesigner))
         setFullName("")
         setError({ fullName: "", workingHours: "" })
-    }
-
-    const handleSelect = (id) => {
-        dispatch(selectDesigner(id))
     }
 
     return (
